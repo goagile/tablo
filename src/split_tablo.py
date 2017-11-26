@@ -1,5 +1,6 @@
-from tablo.split_tablo_format import Align, Format, joinrow
-from tablo.base_tablo import TabloColumn, Tablo
+from tablo.src.base_tablo import TabloColumn, Tablo
+
+from src.split_tablo_format import Align, Format, joinrow
 
 
 class SplitTabloColumn(TabloColumn):

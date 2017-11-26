@@ -8,7 +8,7 @@
 
 Подключаем таблицу
 
-    >>> from tablo.base_tablo import Tablo
+    >>> from src.base_tablo import Tablo
 
 Создание таблицы (с указанием заголовков)
 

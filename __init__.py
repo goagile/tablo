@@ -1,1 +1,1 @@
-from tablo.split_tablo import SplitTablo
+from src.split_tablo import SplitTablo
