@@ -5,9 +5,9 @@
 
 Подключаем таблицу
 
-    >>> from tablo import SplitTablo
+    >>> from src import Tablo
 
-    >>> t = SplitTablo('X  Y  Z  A  B'.split())
+    >>> t = Tablo('X  Y  Z  A  B'.split())
     >>> t.append_row('@ 4   2.1 False Нет'.split())
     >>> t.append_row('$ 5.2 8   True  Да '.split())
 

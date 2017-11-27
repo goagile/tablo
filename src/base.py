@@ -7,7 +7,7 @@ INVALID_COLUMN_NAME = 'Invalid column name'
 INVALID_PRIMITIVE_TYPE = 'Invalid Primitive type'
 
 
-class TabloRow:
+class BaseTabloRow:
 
     data_types = (int, float, str, bool)
 
@@ -43,7 +43,7 @@ class TabloRow:
         return self.__row_data[item]
 
 
-class TabloColumn:
+class BaseTabloColumn:
 
     def __init__(self, name, rows):
         self._rows = self.__collect_rows(name, rows)
@@ -57,10 +57,10 @@ class TabloColumn:
         return self._rows[item]
 
 
-class Tablo:
+class BaseTablo:
 
-    _Column = TabloColumn
-    _Row = TabloRow
+    _Column = BaseTabloColumn
+    _Row = BaseTabloRow
 
     def __init__(self, headers):
         self._headers = headers

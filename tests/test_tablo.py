@@ -8,12 +8,12 @@
 
 Подключаем таблицу
 
-    >>> from src.base_tablo import Tablo
+    >>> from src.base import BaseTablo
 
 Создание таблицы (с указанием заголовков)
 
     >>> headers = 'X Y Z A B'.split()
-    >>> tablo = Tablo(headers)
+    >>> tablo = BaseTablo(headers)
 
 Добавление строки в таблицу
 

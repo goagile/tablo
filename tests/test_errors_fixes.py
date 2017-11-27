@@ -2,7 +2,7 @@
 
 Подключаем таблицу
 
-    >>> from tablo import SplitTablo
+    >>> from src import Tablo
 
 Фикс: Ошибка выравнивания
 -------------------------
@@ -12,7 +12,7 @@
     | x | 1.87887 |
     | y | 20.0    |
 
-    >>> tablo = SplitTablo(headers='Name Value'.split())
+    >>> tablo = Tablo(headers='Name Value'.split())
     >>> tablo.append_row(['x', 1.87887])
     >>> tablo.append_row(['y', 20.0])
     >>> tablo.print()

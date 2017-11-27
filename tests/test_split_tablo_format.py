@@ -1,6 +1,6 @@
 """
 
-    >>> from src.split_tablo_format import joinrow, Align, Format
+    >>> from src.format import joinrow, Align, Format
 
 Печать отформатированной последовательности
 
