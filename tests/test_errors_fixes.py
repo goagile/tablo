@@ -2,7 +2,7 @@
 
 Подключаем таблицу
 
-    >>> from src import Tablo
+    >>> from tablo import Tablo
 
 Фикс: Ошибка выравнивания
 -------------------------

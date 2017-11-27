@@ -1,4 +1,4 @@
-from src import Tablo
+from tablo import Tablo
 
 
 I = 562.2

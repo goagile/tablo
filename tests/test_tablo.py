@@ -5,7 +5,7 @@
 
 Подключаем таблицу
 
-    >>> from src import Tablo
+    >>> from tablo import Tablo
 
     >>> t = Tablo('X  Y  Z  A  B'.split())
     >>> t.append_row('@ 4   2.1 False Нет'.split())

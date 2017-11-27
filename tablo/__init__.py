@@ -1,6 +1,6 @@
-from tablo.src.base import BaseTabloColumn, BaseTablo
+from tablo.base import BaseTabloColumn, BaseTablo
 
-from src.format import Align, Format, joinrow
+from tablo.format import Align, Format, joinrow
 
 
 class TabloColumn(BaseTabloColumn):
