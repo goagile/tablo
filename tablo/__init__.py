@@ -5,6 +5,10 @@ from tablo.base import BaseTabloColumn, BaseTablo
 from tablo.format import Align, Format, joinrow
 
 
+ROW_PATTERN = re.compile('\s*\|\s*')
+ROW_SEPARATOR = re.compile(r'\|\|')
+
+
 class TabloColumn(BaseTabloColumn):
     """ Моделирует колонку таблицы с разделителями """
 
@@ -91,7 +95,7 @@ class Tablo(BaseTablo):
 
     @classmethod
     def from_str(cls, text):
-        rows = text.split('\n')
+        rows = re.split(ROW_SEPARATOR, text)
         str_headers = cls.__parse_str_row(rows[0])
         t = Tablo(str_headers)
         for row in rows[1:]:
@@ -100,6 +104,5 @@ class Tablo(BaseTablo):
 
     @classmethod
     def __parse_str_row(cls, str_row):
-        pattern = re.compile('\s*\|\s*')
-        symbols = [s for s in re.split(pattern, str_row) if s]
+        symbols = [s.strip() for s in re.split(ROW_PATTERN, str_row) if s]
         return symbols
