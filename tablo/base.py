@@ -52,8 +52,7 @@ class BaseTabloColumn:
         return [getattr(row, name) for row in rows]
 
     def __getitem__(self, item):
-        if len(self._rows) < item:
-            raise AttributeError(ERROR_TEMPLATE.format(item, INVALID_ROW_INDEX))
+        validate_item(item, self._rows)
         return self._rows[item]
 
 
@@ -74,6 +73,7 @@ class BaseTablo:
         return self.__getattribute__(item)
 
     def __getitem__(self, item):
+        validate_item(item, self._rows)
         return self._rows[item]
 
     def append_row(self, row_data):
@@ -85,3 +85,8 @@ class BaseTablo:
         for h in self._headers:
             new_column = self._Column(h, self._rows)
             self._columns[h] = new_column
+
+
+def validate_item(item, rows):
+    if len(rows) <= item:
+        raise AttributeError(ERROR_TEMPLATE.format(item, INVALID_ROW_INDEX))

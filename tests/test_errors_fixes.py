@@ -20,4 +20,18 @@
     | x    | 1.87887 |
     | y    | 20.0    |
 
+Фикс: В таблице нет строк
+-------------------------
+Пользователь пытается достучаться до строки, когда строки еще не добавлены
+
+    Traceback (most recent call last):
+      ...
+    IndexError: list index out of range
+
+    >>> tablo = Tablo(headers='Name Value'.split())
+    >>> tablo[0]
+    Traceback (most recent call last):
+      ...
+    AttributeError: '0' Invalid row index
+
 """

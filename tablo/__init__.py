@@ -1,3 +1,5 @@
+import re
+
 from tablo.base import BaseTabloColumn, BaseTablo
 
 from tablo.format import Align, Format, joinrow
@@ -47,6 +49,10 @@ class Tablo(BaseTablo):
     def __init__(self, headers):
         super().__init__(headers)
 
+    @property
+    def headers(self):
+        return self._headers
+
     def __str__(self):
         return self._get_row_strs()
 
@@ -82,3 +88,18 @@ class Tablo(BaseTablo):
     def __format_data(self, data, h) -> tuple:
         column = getattr(self, h)
         return (data, column.format)
+
+    @classmethod
+    def from_str(cls, text):
+        rows = text.split('\n')
+        str_headers = cls.__parse_str_row(rows[0])
+        t = Tablo(str_headers)
+        for row in rows[1:]:
+            t.append_row(cls.__parse_str_row(row))
+        return t
+
+    @classmethod
+    def __parse_str_row(cls, str_row):
+        pattern = re.compile('\s*\|\s*')
+        symbols = [s for s in re.split(pattern, str_row) if s]
+        return symbols
