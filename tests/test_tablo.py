@@ -13,8 +13,6 @@
 
 Печать таблицы (Авто-выравнивание ширины колонок)
 
-    # >>> [x for x in dir(t[0]) if not x.startswith('_')]
-
     >>> t.print()
     | X | Y   | Z   | A     | B   |
     | @ | 4   | 2.1 | False | Нет |
@@ -26,7 +24,6 @@
     >>> t.X.centred()
     >>> t.B.margin = 15
     >>> t.B.centred()
-
     >>> t.A.not_spaced()
 
     >>> t.print()

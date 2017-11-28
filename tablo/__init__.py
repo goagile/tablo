@@ -47,10 +47,22 @@ class Tablo(BaseTablo):
     def __init__(self, headers):
         super().__init__(headers)
 
+    def __str__(self):
+        return self._get_row_strs()
+
+    def _get_row_strs(self):
+        result = ''
+        header_str = joinrow(self.__formatted_header())
+        result += header_str + '\n'
+        for i, row in enumerate(self.__formatted_rows()):
+            row_str = joinrow(row)
+            result += row_str + '\n'
+        return result
+
     def print(self):
         header_str = joinrow(self.__formatted_header())
         print(header_str)
-        for row in self.__formatted_rows():
+        for i, row in enumerate(self.__formatted_rows()):
             row_str = joinrow(row)
             print(row_str)
 
