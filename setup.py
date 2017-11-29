@@ -4,10 +4,10 @@ setup(
     name='tablo',
     description='Simple text table with separator',
     license="MIT license",
-    version='1.0.3',
+    version='1.0.4',
     author='khardi',
     author_email='kharchilindanila@gmail.com',
-    url='https://khardi.github.io/',
+    url='https://github.io/khardi/tablo',
     packages=["tablo"],
     include_package_data=True,
 )
