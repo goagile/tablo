@@ -23,6 +23,13 @@ class Format:
         return "Format(align={}, margin={}, spacer='{}')".format(
             self.align.name, self.margin, self.spacer)
 
+    def __eq__(self, other):
+        return all([
+            self.align == other.align,
+            self.margin == other.margin,
+            self.spacer == other.spacer
+        ])
+
     def copy(self):
         return Format(
             align=self.align,

@@ -5,6 +5,11 @@ from tablo import BaseTablo
 
 class TestBaseFunctions(unittest.TestCase):
 
+    def test_tablo_not_have_rows(self):
+        tablo = BaseTablo(headers='Name Value'.split())
+        with self.assertRaises(IndexError):
+            actual = tablo[0]
+
     def test_raise_exception_with_non_promitive_data(self):
         tablo = BaseTablo('X Y Z A B'.split())
         row = ('@', 4, 2.1, False, ['invalid', 'data'])
