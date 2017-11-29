@@ -8,12 +8,12 @@
 
 Подключаем таблицу
 
-    >>> from tablo.base import BaseTablo
+    >>> from tablo import Tablo
 
 Создание таблицы (с указанием заголовков)
 
     >>> headers = 'X Y Z A B'.split()
-    >>> tablo = BaseTablo(headers)
+    >>> tablo = Tablo(headers)
 
 Добавление строки в таблицу
 
@@ -57,7 +57,6 @@
     ['@', 4, 2.1, False, 'Нет']
     ['&', 22, 5.03, True, 'Да']
 
-
 Ошибки
 ======
 
@@ -91,5 +90,32 @@
     Traceback (most recent call last):
       ...
     AttributeError: 'G' Invalid column name
+
+Печать таблицы
+==============
+
+    >>> t = Tablo('X  Y  Z  A  B'.split())
+    >>> t.append_row('@ 4   2.1 False Нет'.split())
+    >>> t.append_row('$ 5.2 8   True  Да '.split())
+
+Печать таблицы (Авто-выравнивание ширины колонок)
+
+    >>> t.print()
+    | X | Y   | Z   | A     | B   |
+    | @ | 4   | 2.1 | False | Нет |
+    | $ | 5.2 | 8   | True  | Да  |
+
+Ручное выравнивание + автовыравнивание колонки
+
+    >>> t.X.margin = 10
+    >>> t.X.centred()
+    >>> t.B.margin = 15
+    >>> t.B.centred()
+    >>> t.A.not_spaced()
+
+    >>> t.print()
+    |     X      | Y   | Z   |A    |        B        |
+    |     @      | 4   | 2.1 |False|       Нет       |
+    |     $      | 5.2 | 8   |True |       Да        |
 
 """

@@ -3,9 +3,26 @@ import unittest
 from tablo import BaseTablo
 
 
-class TestEquality(unittest.TestCase):
+class TestBaseFunctions(unittest.TestCase):
 
-    def test__get_column_value_by_name(self):
+    def test_raise_exception_with_non_promitive_data(self):
+        tablo = BaseTablo('X Y Z A B'.split())
+        row = ('@', 4, 2.1, False, ['invalid', 'data'])
+
+        with self.assertRaises(ValueError) as x:
+            tablo.append_row(row)
+
+    def test_loose_data_in_rows(self):
+        expected = ('45', 18.2, None, None, None)
+        tablo = BaseTablo('X Y Z A B'.split())
+        tablo.append_row(['45', 18.2])
+        row = tablo[0]
+
+        actual = row.X, row.Y, row.Z, row.A, row.B
+
+        self.assertEqual(expected, actual)
+
+    def test__get_row_value_by_column_name(self):
         tablo = BaseTablo('X Y Z A B'.split())
         expected = '@', 4, 2.1, False, 'Нет'
         tablo.append_row(expected)
@@ -15,7 +32,16 @@ class TestEquality(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test__get_column_value_by_index(self):
+    def test_raise_error_with_invalid_column_name(self):
+        tablo = BaseTablo('X Y Z A B'.split())
+        expected = '@', 4, 2.1, False, 'Нет'
+        tablo.append_row(expected)
+        row = tablo[0]
+
+        with self.assertRaises(AttributeError):
+            row.G
+
+    def test__get_row_value_by_column_index(self):
         tablo = BaseTablo('X Y Z A B'.split())
         expected = '@', 4, 2.1, False, 'Нет'
         tablo.append_row(expected)
@@ -25,66 +51,50 @@ class TestEquality(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-        """
+    def test__get_column_value_by_row_index(self):
+        expected = ('@', '&')
+        tablo = BaseTablo('X Y Z A B'.split())
+        tablo.append_row(['@', 4, 2.1, False, 'Нет'])
+        tablo.append_row(['&', 22, 5.03, True, 'Да'])
+        column_X = tablo.X
 
-        Добавление строки в таблицу
+        actual = column_X[0], column_X[1]
 
-            >>> row = '&', 22, 5.03, True, 'Да'
-            >>> tablo.append_row(row)
+        self.assertEqual(expected, actual)
 
-        Доступ к столбцу по индексу строки
+    def test__raise_with_index_out_of_range(self):
+        tablo = BaseTablo('X Y Z A B'.split())
+        tablo.append_row(['@', 4, 2.1, False, 'Нет'])
+        tablo.append_row(['&', 22, 5.03, True, 'Да'])
+        column_X = tablo.X
 
-            >>> column_X = tablo.X
-            >>> column_X[0], column_X[1]
-            ('@', '&')
+        with self.assertRaises(IndexError):
+            actual = column_X[10]
 
-        Перебор строк и доступ к данным строки
-
-            >>> for row in tablo:
-            ...     row.data
-            ['@', 4, 2.1, False, 'Нет']
+    def test__iter_rows_and_get_row_data(self):
+        expected = [
+            ['@', 4, 2.1, False, 'Нет'],
             ['&', 22, 5.03, True, 'Да']
+        ]
+        tablo = BaseTablo('X Y Z A B'.split())
+        tablo.append_row(expected[0])
+        tablo.append_row(expected[1])
 
-        Перебор строк и столбцов
+        actual = [row.data for row in tablo]
 
-            >>> for row in tablo:
-            ...     [col for col in row]
-            ['@', 4, 2.1, False, 'Нет']
+        self.assertEqual(expected, actual)
+
+    def test__iter_rows_and_columns(self):
+        expected = [
+            ['@', 4, 2.1, False, 'Нет'],
             ['&', 22, 5.03, True, 'Да']
+        ]
+        tablo = BaseTablo('X Y Z A B'.split())
+        tablo.append_row(expected[0])
+        tablo.append_row(expected[1])
 
+        actual = []
+        for row in tablo:
+            actual.append([col for col in row])
 
-        Ошибки
-        ======
-
-        Добавление сложного типа в ячейку
-
-            >>> row = ('@', 4, 2.1, False, ['invalid', 'data'])
-            >>> tablo.append_row(row)
-            Traceback (most recent call last):
-                ...
-            ValueError: '['invalid', 'data']' Invalid Primitive type
-
-        Неполная строка
-
-            >>> row = ('45', 18.2)
-            >>> tablo.append_row(row)
-            >>> row = tablo[2]
-            >>> row.X, row.Y, row.Z, row.A, row.B
-            ('45', 18.2, None, None, None)
-
-        Доступ к несуществующей строке
-
-            >>> column_X[10]
-            Traceback (most recent call last):
-              ...
-            IndexError: list index out of range
-
-        Доступ к несуществующему атрибуту по имени столбца
-
-            >>> row = tablo[0]
-            >>> row.G
-            Traceback (most recent call last):
-              ...
-            AttributeError: 'G' Invalid column name
-
-        """
+        self.assertEqual(expected, actual)
