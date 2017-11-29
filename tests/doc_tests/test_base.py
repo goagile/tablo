@@ -82,7 +82,7 @@
     >>> column_X[10]
     Traceback (most recent call last):
       ...
-    AttributeError: '10' Invalid row index
+    IndexError: list index out of range
 
 Доступ к несуществующему атрибуту по имени столбца
 

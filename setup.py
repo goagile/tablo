@@ -4,7 +4,7 @@ setup(
     name='tablo',
     description='Simple text table with separator',
     license="MIT license",
-    version='1.0.2',
+    version='1.0.3',
     author='khardi',
     author_email='kharchilindanila@gmail.com',
     url='https://khardi.github.io/',

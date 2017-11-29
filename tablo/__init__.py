@@ -6,7 +6,8 @@ from tablo.format import Align, Format, joinrow
 
 
 ROW_PATTERN = re.compile('\s*\|\s*')
-ROW_SEPARATOR = re.compile(r'\|\|')
+
+NEED_TABLO_INSTANCE_TO_COMPARE = 'Need Tablo instance to compare'
 
 
 class TabloColumn(BaseTabloColumn):
@@ -57,8 +58,38 @@ class Tablo(BaseTablo):
     def headers(self):
         return self._headers
 
+    @property
+    def rows(self):
+        return self._rows
+
     def __str__(self):
         return self._get_row_strs()
+
+    def __eq__(self, other):
+        if not isinstance(other, Tablo):
+            raise TypeError('{} {}'.format(other, NEED_TABLO_INSTANCE_TO_COMPARE))
+        result = all([
+            self.__are_headers_equal(other),
+            self.__are_rows_equal(other)
+        ])
+        return result
+
+    def __are_headers_equal(self, other):
+        if len(self.headers) != len(other.headers):
+            return False
+        for s, o in zip(self.headers, other.headers):
+            if s != o:
+                return False
+        return True
+
+    def __are_rows_equal(self, other):
+        if len(self.rows) != len(other.rows):
+            return False
+        for s, o in zip(self.rows, other.rows):
+            for se, so in zip(s, o):
+                if se != so:
+                    return False
+        return True
 
     def _get_row_strs(self):
         result = ''
@@ -95,12 +126,19 @@ class Tablo(BaseTablo):
 
     @classmethod
     def from_str(cls, text):
-        rows = re.split(ROW_SEPARATOR, text)
+        rows = cls.__split_rows(text)
         str_headers = cls.__parse_str_row(rows[0])
         t = Tablo(str_headers)
         for row in rows[1:]:
             t.append_row(cls.__parse_str_row(row))
         return t
+
+    @classmethod
+    def __split_rows(cls, text):
+        ROW_SEPARATOR = re.compile(r'\|\||\s*\n+\s*')
+        rows = re.split(ROW_SEPARATOR, text)
+        result = [r.strip() for r in rows if r]
+        return result
 
     @classmethod
     def __parse_str_row(cls, str_row):

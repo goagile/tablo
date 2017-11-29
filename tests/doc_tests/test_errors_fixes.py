@@ -32,6 +32,6 @@
     >>> tablo[0]
     Traceback (most recent call last):
       ...
-    AttributeError: '0' Invalid row index
+    IndexError: list index out of range
 
 """
